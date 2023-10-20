@@ -1,5 +1,10 @@
 import { MicroSiteWidget } from '~/features/microSite/MicroSiteWidget/MicroSiteWidget';
+import { DefaultLayout } from '~/ui/DefaultLayout';
 
 export function App() {
-  return <MicroSiteWidget />;
+  return (
+    <DefaultLayout>
+      <MicroSiteWidget />
+    </DefaultLayout>
+  );
 }
