@@ -1,0 +1,41 @@
+.Banner {
+  max-width: 241px;
+  width: 100%;
+  padding: 20px 5px 10px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 220px;
+  gap: 20px;
+  background-color: #86D3F4;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.help {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+  max-width: 126px;
+}
+
+.button {
+  width: 156px;
+  height: 52px;
+  padding: 16px;
+  color: #86D3F4;
+  border: none;
+  cursor: pointer;
+  background-color: #000000;
+}
