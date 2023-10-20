@@ -1,0 +1,16 @@
+.OrderFormOperationButton {
+  border: 2px solid #000;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.isActive {
+  color: #fff !important;
+  background-color: #000 !important;
+}

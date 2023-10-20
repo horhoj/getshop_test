@@ -5,5 +5,9 @@ interface WrapperProps {
   children: ReactNode;
 }
 export function Wrapper({ children }: WrapperProps) {
-  return <div className={styles.Wrapper}>{children}</div>;
+  return (
+    <div className={styles.Wrapper} onContextMenu={(e) => e.preventDefault()}>
+      {children}
+    </div>
+  );
 }

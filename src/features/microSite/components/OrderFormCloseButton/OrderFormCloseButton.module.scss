@@ -1,0 +1,16 @@
+.OrderFormCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 88px;
+  height: 52px;
+  border: 2px solid #000;
+  font-size: 30px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.isActive {
+  color: #fff !important;
+  background-color: #000 !important;
+}

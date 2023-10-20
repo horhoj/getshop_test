@@ -1,0 +1,20 @@
+.OrderFormQrCode {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.text {
+  max-width: 100px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: right;
+  color: #fff;
+}

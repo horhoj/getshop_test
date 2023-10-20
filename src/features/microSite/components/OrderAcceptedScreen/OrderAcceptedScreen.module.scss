@@ -1,0 +1,35 @@
+.OrderAcceptedScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 380px;
+  max-width: 380px;
+
+  width: 100%;
+  background-color: #86D3F4;
+  height: 720px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.title {
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  max-width: 200px;
+}
+
+.text {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+}

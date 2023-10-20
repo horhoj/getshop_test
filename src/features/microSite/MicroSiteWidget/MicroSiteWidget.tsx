@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Wrapper } from '../components/Wrapper';
 import { Video } from '../components/Video';
 import { Banner } from '../components/Banner';
+import { OrderForm } from '../components/OrderForm';
+import { OrderAcceptedScreen } from '../components/OrderAcceptedScreen';
 
-type Mode = 'banner' | 'video' | 'form';
+type Mode = 'banner' | 'video' | 'form' | 'orderAccepted';
 
 export function MicroSiteWidget() {
   const [isStart, setIsStart] = useState(true);
@@ -17,7 +19,7 @@ export function MicroSiteWidget() {
       }
       timerId = setTimeout(() => {
         setMode('banner');
-      }, 5000);
+      }, 2000);
     }
     return () => {
       if (timerId) {
@@ -41,21 +43,15 @@ export function MicroSiteWidget() {
           }}
         />
       )}
-      <button
-        onClick={() => {
-          setMode('video');
-          setIsStart(false);
-        }}
-      >
-        video
-      </button>
-      <button
-        onClick={() => {
-          setMode('banner');
-        }}
-      >
-        banner
-      </button>
+      {mode === 'form' && (
+        <OrderForm
+          onClose={() => setMode('video')}
+          onSuccess={() => setMode('orderAccepted')}
+        />
+      )}
+      {mode === 'orderAccepted' && (
+        <OrderAcceptedScreen onClose={() => setMode('video')} />
+      )}
     </Wrapper>
   );
 }

@@ -13,7 +13,7 @@ export function Banner({ onClick }: BannerProps) {
         <div>ПОДАРИТЕ ЕМУ СОБАКУ!</div>
       </div>
 
-      <img src={qrCode} alt="" />
+      <img src={qrCode} alt="QrCode" />
 
       <div className={styles.help}>Сканируйте QR-код или нажмите ОК</div>
       <button onClick={onClick} className={styles.button}>
