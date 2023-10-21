@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styles from './Banner.module.scss';
 import qrCode from '~/assets/qr-code.png';
 
@@ -6,6 +7,19 @@ interface BannerProps {
 }
 
 export function Banner({ onClick }: BannerProps) {
+  useEffect(() => {
+    const handle = (e: KeyboardEvent) => {
+      e.preventDefault();
+      if (e.key === 'Enter') {
+        onClick();
+      }
+    };
+    document.addEventListener('keydown', handle);
+    return () => {
+      document.removeEventListener('keydown', handle);
+    };
+  }, [onClick]);
+
   return (
     <div className={styles.Banner}>
       <div className={styles.title}>

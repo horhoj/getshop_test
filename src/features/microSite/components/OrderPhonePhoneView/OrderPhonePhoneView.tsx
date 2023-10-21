@@ -2,10 +2,11 @@ import styles from './OrderPhonePhoneView.module.scss';
 
 interface OrderPhonePhoneViewProps {
   phone: string;
+  phonePrefix: string;
 }
 
 const format = (phone: string) => {
-  let view = '+7(';
+  let view = '(';
 
   for (let index = 0; index < 10; index++) {
     if (index === 3) {
@@ -21,6 +22,14 @@ const format = (phone: string) => {
   return view;
 };
 
-export function OrderPhonePhoneView({ phone }: OrderPhonePhoneViewProps) {
-  return <div className={styles.OrderPhonePhoneView}>{format(phone)}</div>;
+export function OrderPhonePhoneView({
+  phone,
+  phonePrefix,
+}: OrderPhonePhoneViewProps) {
+  return (
+    <div className={styles.OrderPhonePhoneView}>
+      {phonePrefix}
+      {format(phone)}
+    </div>
+  );
 }

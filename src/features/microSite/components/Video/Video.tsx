@@ -1,5 +1,5 @@
 import ReactPlayer from 'react-player';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './Video.module.scss';
 import video from '~/assets/volvo_truks.mp4';
@@ -16,6 +16,19 @@ export function Video({ isPlay, setIsStart, isStart }: VideoProps) {
     setIsStart(false);
   };
 
+  useEffect(() => {
+    const handle = (e: KeyboardEvent) => {
+      e.preventDefault();
+      if (e.key === 'Enter') {
+        handlePlayBtnClk();
+      }
+    };
+    document.addEventListener('keydown', handle);
+    return () => {
+      document.removeEventListener('keydown', handle);
+    };
+  }, [handlePlayBtnClk]);
+
   return (
     <div className={classNames(styles.Video)}>
       <ReactPlayer
@@ -30,7 +43,9 @@ export function Video({ isPlay, setIsStart, isStart }: VideoProps) {
       {isStart && (
         <div className={styles.playWrap}>
           <div>
-            <button onClick={handlePlayBtnClk}>play</button>
+            <button onClick={handlePlayBtnClk} className={styles.playButton}>
+              кликните или нажмите Enter для начала воспроизведения
+            </button>
           </div>
         </div>
       )}
