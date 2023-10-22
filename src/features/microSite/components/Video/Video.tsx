@@ -39,7 +39,7 @@ export function Video({ isPlay, setIsStart, isStart }: VideoProps) {
         height={720}
         playing={isPlay && !isStart}
         ref={ref}
-        muted={true}
+        muted={false}
         loop={true}
       />
       {isStart && (
