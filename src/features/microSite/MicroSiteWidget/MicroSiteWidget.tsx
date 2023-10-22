@@ -7,6 +7,8 @@ import { OrderAcceptedScreen } from '../components/OrderAcceptedScreen';
 
 type Mode = 'banner' | 'video' | 'form' | 'orderAccepted';
 
+const SHOW_BANNER_DELAY = 5000;
+
 export function MicroSiteWidget() {
   const [isStart, setIsStart] = useState(true);
   const [mode, setMode] = useState<Mode>('video');
@@ -19,7 +21,7 @@ export function MicroSiteWidget() {
       }
       timerId = setTimeout(() => {
         setMode('banner');
-      }, 2000);
+      }, SHOW_BANNER_DELAY);
     }
     return () => {
       if (timerId) {
