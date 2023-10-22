@@ -12,6 +12,7 @@ import {
   OrderFormOperation,
 } from './OrderForm.types';
 import { orderFormGetNextButton } from './OrderForm.helpers';
+import { useNumVerify } from './OrderForm.hooks';
 import { getUUID } from '~/utils/getUUID';
 
 const BUTTON_LIST: OrderFormButtonItem[] = [
@@ -42,7 +43,13 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
     DEFAULT_ACTIVE_BUTTON,
   );
 
-  const isAllowConfirmation = isConfirm && phone.length === 10;
+  const numVerifyResult = useNumVerify(phone);
+
+  const isAllowConfirmation =
+    isConfirm &&
+    phone.length === 10 &&
+    numVerifyResult !== 'NOT_VALID' &&
+    numVerifyResult !== 'VALIDATION_IN_PROGRESS';
 
   const handleOperation = (operation: OrderFormOperation) => {
     setActiveButtonId(operation);
@@ -62,6 +69,9 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
 
   const handleSubmit = () => {
     setActiveButtonId('submit');
+    //ЗДЕСЬ МОЖНО ОТПРАВИТЬ РЕАЛЬНЫЙ ЗАПРОС НА ЗАЯВКУ
+    // eslint-disable-next-line no-console
+    console.log('ЗАЯВКА ОТПРАВЛЕНА');
     onSuccess();
   };
 
@@ -91,6 +101,9 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
 
         if (nextKey !== undefined) {
           if (nextKey === 'submit' && !isAllowConfirmation) {
+            return;
+          }
+          if (nextKey === 'confirm' && numVerifyResult === 'NOT_VALID') {
             return;
           }
           setActiveButtonId(nextKey);
@@ -139,7 +152,11 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
           Введите ваш номер мобильного телефона
         </div>
         <div className={styles.number}>
-          <OrderPhonePhoneView phone={phone} phonePrefix={PHONE_PREFIX} />
+          <OrderPhonePhoneView
+            phone={phone}
+            phonePrefix={PHONE_PREFIX}
+            isNotValid={numVerifyResult === 'NOT_VALID'}
+          />
         </div>
         <div className={styles.help}>
           и с Вами свяжется наш менеждер для дальнейшей консультации
@@ -157,14 +174,20 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
             </OrderFormOperationButton>
           ))}
         </div>
-        <div className={styles.confirmBlock}>
-          <OrderFormConfirmButton
-            isConfirm={isConfirm}
-            onClick={handleConfirm}
-            isActive={activeButtonId === 'confirm'}
-          />
-          <div>Согласие на обработку персональных данных</div>
-        </div>
+
+        {numVerifyResult === 'NOT_VALID' ? (
+          <div className={styles.numberNotValidBlock}>Неверно введён номер</div>
+        ) : (
+          <div className={styles.confirmBlock}>
+            <OrderFormConfirmButton
+              isConfirm={isConfirm}
+              onClick={handleConfirm}
+              isActive={activeButtonId === 'confirm'}
+            />
+            <div>Согласие на обработку персональных данных</div>
+          </div>
+        )}
+
         <div className={styles.submitBlock}>
           <OrderFormSubmitButton
             disabled={!isAllowConfirmation}

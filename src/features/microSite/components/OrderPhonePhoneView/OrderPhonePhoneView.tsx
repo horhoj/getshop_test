@@ -1,9 +1,5 @@
+import classNames from 'classnames';
 import styles from './OrderPhonePhoneView.module.scss';
-
-interface OrderPhonePhoneViewProps {
-  phone: string;
-  phonePrefix: string;
-}
 
 const format = (phone: string) => {
   let view = '(';
@@ -22,12 +18,24 @@ const format = (phone: string) => {
   return view;
 };
 
+interface OrderPhonePhoneViewProps {
+  phone: string;
+  phonePrefix: string;
+  isNotValid: boolean;
+}
+
 export function OrderPhonePhoneView({
   phone,
   phonePrefix,
+  isNotValid,
 }: OrderPhonePhoneViewProps) {
   return (
-    <div className={styles.OrderPhonePhoneView}>
+    <div
+      className={classNames(
+        styles.OrderPhonePhoneView,
+        isNotValid && styles.notValid,
+      )}
+    >
       {phonePrefix}
       {format(phone)}
     </div>

@@ -24,11 +24,7 @@
 
 .number {
   margin-top: 13px;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 38px;
-  letter-spacing: 0em;
-  text-align: left;
+
 }
 
 .help {
@@ -72,4 +68,18 @@
 
 .submitBlock {
   margin-top: 13px;
+}
+
+.numberNotValidBlock {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: red;
+  margin-top: 21px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

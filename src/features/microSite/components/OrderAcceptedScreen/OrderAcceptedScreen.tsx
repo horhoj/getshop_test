@@ -9,7 +9,9 @@ interface OrderAcceptedScreenProps {
 export function OrderAcceptedScreen({ onClose }: OrderAcceptedScreenProps) {
   useEffect(() => {
     const handle = (e: KeyboardEvent) => {
-      e.preventDefault();
+      if (e.key !== 'F12') {
+        e.preventDefault();
+      }
       if (e.key === 'Enter' || e.key === 'Escape') {
         onClose();
       }

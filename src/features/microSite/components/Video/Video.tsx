@@ -18,7 +18,9 @@ export function Video({ isPlay, setIsStart, isStart }: VideoProps) {
 
   useEffect(() => {
     const handle = (e: KeyboardEvent) => {
-      e.preventDefault();
+      if (e.key !== 'F12') {
+        e.preventDefault();
+      }
       if (e.key === 'Enter') {
         handlePlayBtnClk();
       }

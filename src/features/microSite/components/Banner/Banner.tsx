@@ -9,7 +9,9 @@ interface BannerProps {
 export function Banner({ onClick }: BannerProps) {
   useEffect(() => {
     const handle = (e: KeyboardEvent) => {
-      e.preventDefault();
+      if (e.key !== 'F12') {
+        e.preventDefault();
+      }
       if (e.key === 'Enter') {
         onClick();
       }
