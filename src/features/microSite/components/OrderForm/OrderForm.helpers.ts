@@ -1,11 +1,12 @@
 import {
+  Arrows,
   OrderFormActiveButtonId,
   OrderFormKeyboardDictionaryItem,
 } from './OrderForm.types';
 
 export const orderFormGetNextButton = (
   currentButton: OrderFormActiveButtonId,
-  arrow: 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight',
+  arrow: Arrows,
 ) => {
   //В общем более приемлемого решения чем задать через словарь для кнопок не нашел
   //Идея в том, что по нажатой кнопке и типу нажатой стрелки, через словарь определяем

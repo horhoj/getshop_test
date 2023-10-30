@@ -12,9 +12,8 @@ export type OrderFormActiveButtonId =
   | 'close'
   | 'submit';
 
-export interface OrderFormKeyboardDictionaryItem {
-  ArrowUp?: OrderFormActiveButtonId;
-  ArrowDown?: OrderFormActiveButtonId;
-  ArrowLeft?: OrderFormActiveButtonId;
-  ArrowRight?: OrderFormActiveButtonId;
-}
+export type Arrows = 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight';
+
+export type OrderFormKeyboardDictionaryItem = Partial<
+  Record<Arrows, OrderFormActiveButtonId>
+>;

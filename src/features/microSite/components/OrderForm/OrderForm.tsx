@@ -7,6 +7,7 @@ import { OrderFormConfirmButton } from '../OrderFormConfirmButton';
 import { OrderFormSubmitButton } from '../OrderFormSubmitButton';
 import styles from './OrderForm.module.scss';
 import {
+  Arrows,
   OrderFormActiveButtonId,
   OrderFormButtonItem,
   OrderFormOperation,
@@ -30,6 +31,7 @@ const BUTTON_LIST: OrderFormButtonItem[] = [
 const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 const DEFAULT_ACTIVE_BUTTON = 1;
 const PHONE_PREFIX = '+7';
+const ARROWS: Arrows[] = ['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp'];
 
 interface OrderFormProps {
   onClose: () => void;
@@ -77,27 +79,13 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key !== 'F12') {
-        e.preventDefault();
-      }
-
-      if (DIGITS.includes(e.key)) {
+      const handleNumericKeyPress = () => {
         const key = Number.parseInt(e.key);
         handleOperation(key);
-      }
-      if (e.key === 'Backspace') {
-        handleOperation('clear');
-      }
-      if (e.key === 'Escape') {
-        onClose();
-      }
-      if (
-        e.key === 'ArrowDown' ||
-        e.key === 'ArrowUp' ||
-        e.key === 'ArrowLeft' ||
-        e.key === 'ArrowRight'
-      ) {
-        const nextKey = orderFormGetNextButton(activeButtonId, e.key);
+      };
+
+      const handleArrowPressKey = () => {
+        const nextKey = orderFormGetNextButton(activeButtonId, e.key as Arrows);
 
         if (nextKey !== undefined) {
           if (nextKey === 'submit' && !isAllowConfirmation) {
@@ -108,29 +96,44 @@ export function OrderForm({ onClose, onSuccess }: OrderFormProps) {
           }
           setActiveButtonId(nextKey);
         }
-      }
-      if (e.key === 'Enter') {
-        if (typeof activeButtonId === 'number') {
-          handleOperation(activeButtonId);
-          return;
+      };
+
+      const handleEnterPressKey = () => {
+        const ENTER_KEYMAP: Record<OrderFormActiveButtonId, () => void> = {
+          submit: handleSubmit,
+          confirm: handleConfirm,
+          clear: () => handleOperation('clear'),
+          close: onClose,
+        };
+
+        Array(10)
+          .fill(null)
+          .forEach((_, index) => {
+            ENTER_KEYMAP[index] = () => handleOperation(index);
+          });
+
+        const currentAction = ENTER_KEYMAP[activeButtonId];
+        if (currentAction) {
+          currentAction();
         }
-        if (activeButtonId === 'clear') {
-          handleOperation('clear');
-          return;
-        }
-        if (activeButtonId === 'close') {
-          onClose();
-          return;
-        }
-        if (activeButtonId === 'submit') {
-          handleSubmit();
-          return;
-        }
-        if (activeButtonId === 'confirm') {
-          handleConfirm();
-        }
+      };
+
+      const KEYMAP: Record<string, () => void> = {
+        F12: () => e.preventDefault(),
+        Backspace: () => handleOperation('clear'),
+        Escape: onClose,
+        Enter: handleEnterPressKey,
+      };
+
+      DIGITS.forEach((item) => (KEYMAP[item] = handleNumericKeyPress));
+      ARROWS.forEach((item) => (KEYMAP[item] = handleArrowPressKey));
+
+      const currentAction = KEYMAP[e.key];
+      if (currentAction) {
+        currentAction();
       }
     };
+
     document.addEventListener('keydown', handler);
 
     return () => {
